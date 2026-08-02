@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Sefa Eyeoglu <contact@scrumplex.net>
+#
+# SPDX-License-Identifier: MIT
+
+.direnv/
+dist/
+node_modules/
+result*
+repl-result*
+package-lock.json

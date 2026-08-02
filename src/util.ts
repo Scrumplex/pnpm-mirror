@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 export const urlToCachePath = (url: string | URL) => {
-	if (!(url instanceof URL)) {
-		url = new URL(url)
-	}
+  if (!(url instanceof URL)) {
+    url = new URL(url);
+  }
 
-	// url.protocol includes the colon. We just need the scheme name
-	const scheme = url.protocol.substring(0, url.protocol.length - 1)
+  // url.protocol includes the colon. We just need the scheme name
+  const scheme = url.protocol.substring(0, url.protocol.length - 1);
 
-	return `${scheme}/${url.hostname}${url.pathname}`
-}
+  return `${scheme}/${url.hostname}${url.pathname}`;
+};

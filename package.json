@@ -16,11 +16,14 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.9.3",
     "mocha": "^11.7.6",
+    "prettier": "3.9.6",
     "tsx": "^4.22.4",
     "typescript": "^7.0.0"
   },
   "scripts": {
     "build": "tsc",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "test": "mocha --require tsx --extension spec.ts src/",
     "dev": "tsx src/index.ts"
   },
