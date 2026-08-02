@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 Sefa Eyeoglu <contact@scrumplex.net>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+.direnv/
+result*
+repl-result*
+
+node_modules
+*.js
