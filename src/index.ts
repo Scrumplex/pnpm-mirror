@@ -101,7 +101,7 @@ const downloadPackage = async (
     ...reqInit,
   }).then((r) => {
     if (!r.body) {
-      throw new Error(`Empty response body for ${url}`);
+      throw new Error(`Empty response body for ${url.toString()}`);
     }
 
     return finished(Readable.fromWeb(r.body).pipe(handle));
@@ -126,6 +126,7 @@ const main = async (args: string[]) => {
   for await (const { index } of pMapIterable(
     packages,
     async (pkg, index) =>
+      /* eslint-disable @typescript-eslint/no-unsafe-argument */
       downloadPackage(pkg[0], pkg[1], outputPath).then((value) => ({
         index,
         value,
@@ -138,4 +139,4 @@ const main = async (args: string[]) => {
   }
 };
 
-main(process.argv.slice(2));
+await main(process.argv.slice(2));
