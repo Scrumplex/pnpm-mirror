@@ -5,9 +5,9 @@
 import assert from "node:assert";
 import { defaultRegistry, registryUrlForPackage } from "./registry.js";
 
-describe("registry", () => {
-  describe("registryUrlForPackage()", () => {
-    it("should handle scoped packages", () => {
+describe("registry", function () {
+  describe("registryUrlForPackage()", function () {
+    it("should handle scoped packages", function () {
       assert.equal(
         registryUrlForPackage("@types/node@24.10.1"),
         `${defaultRegistry}/@types/node/-/node-24.10.1.tgz`,
@@ -17,7 +17,7 @@ describe("registry", () => {
         `${defaultRegistry}/@pnpm/foo.bar/-/foo.bar-12.34.56-beta.1.tgz`,
       );
     });
-    it("should handle unscoped packages", () => {
+    it("should handle unscoped packages", function () {
       assert.equal(
         registryUrlForPackage("typescript@1.2.3"),
         `${defaultRegistry}/typescript/-/typescript-1.2.3.tgz`,
@@ -27,7 +27,7 @@ describe("registry", () => {
         `${defaultRegistry}/date-fns/-/date-fns-0.0.0-beta.0.tgz`,
       );
     });
-    it("should handle pinned tarball", () => {
+    it("should handle pinned tarball", function () {
       assert.equal(
         registryUrlForPackage("foobar@https://example.com/foobar-1.2.3.tgz"),
         `https://example.com/foobar-1.2.3.tgz`,
