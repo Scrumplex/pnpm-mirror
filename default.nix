@@ -30,8 +30,8 @@ buildNpmPackage (finalAttrs: {
   inherit (importNpmLock) npmConfigHook;
 
   postInstall = ''
-    makeWrapper ${lib.getExe nodejs-slim} $out/bin/pnpm-fetch-cache \
-      --add-flags "$out/lib/node_modules/pnpm-fetch-cache"
+    makeWrapper ${lib.getExe nodejs-slim} $out/bin/pnpm-mirror \
+      --add-flags "$out/lib/node_modules/pnpm-mirror"
   '';
 
   passthru.tests = {

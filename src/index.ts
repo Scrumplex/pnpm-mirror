@@ -19,7 +19,7 @@ await configure({
   sinks: { console: getConsoleSink() },
   loggers: [
     {
-      category: "pnpm-fetch-cache",
+      category: "pnpm-mirror",
       lowestLevel: process.env.NODE_ENV === "development" ? "debug" : "info",
       sinks: ["console"],
     },
@@ -30,7 +30,7 @@ await configure({
   ],
 });
 
-const logger = getLogger(["pnpm-fetch-cache", "index"]);
+const logger = getLogger(["pnpm-mirror", "index"]);
 
 const reqInit: RequestInit = {
   headers: {

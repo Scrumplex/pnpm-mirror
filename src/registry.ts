@@ -5,7 +5,7 @@
 import { getLogger } from "@logtape/logtape";
 import { removeSuffix } from "@pnpm/deps.path";
 
-const logger = getLogger(["pnpm-fetch-cache", "index"]);
+const logger = getLogger(["pnpm-mirror", "index"]);
 
 export const defaultRegistry = "https://registry.npmjs.org" as const;
 
