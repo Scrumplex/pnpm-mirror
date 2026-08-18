@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Sefa Eyeoglu <contact@scrumplex.net>
+//
+// SPDX-License-Identifier: MIT
+
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import globals from "globals";
 import js from "@eslint/js";
