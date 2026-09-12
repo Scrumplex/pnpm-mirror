@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2024 Sefa Eyeoglu <contact@scrumplex.net>
+# SPDX-FileCopyrightText: 2026 Sefa Eyeoglu <contact@scrumplex.net>
+#
+# SPDX-License-Identifier: MIT
+
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  flake-checks:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Flake checks
+        run: |
+          nix flake check
