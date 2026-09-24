@@ -131,6 +131,7 @@ const main = async (args: string[]) => {
         index,
         value,
       })),
+    // TODO: CLI option/env var?
     { concurrency: 8 },
   )) {
     const [specifier] = packages[index];
