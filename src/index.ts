@@ -8,29 +8,13 @@ import { dirname, join } from "node:path";
 import { Readable } from "node:stream";
 import { finished } from "node:stream/promises";
 import { type ParseArgsOptionsConfig, parseArgs } from "node:util";
-import { configure, getConsoleSink, getLogger } from "@logtape/logtape";
 import { type PackageSnapshot, readWantedLockfile } from "@pnpm/lockfile.fs";
 import { registryUrlForPackage } from "./registry.js";
-import { urlToCachePath } from "./util.js";
+import { getGlobalLogger, urlToCachePath } from "./util.js";
 import { pMapIterable } from "p-map";
 import { removeSuffix } from "@pnpm/deps.path";
 
-await configure({
-  sinks: { console: getConsoleSink() },
-  loggers: [
-    {
-      category: "pnpm-mirror",
-      lowestLevel: process.env.NODE_ENV === "development" ? "debug" : "info",
-      sinks: ["console"],
-    },
-    {
-      category: ["logtape", "meta"],
-      lowestLevel: "warning",
-    },
-  ],
-});
-
-const logger = getLogger(["pnpm-mirror", "index"]);
+const globalLogger = getGlobalLogger();
 
 const reqInit: RequestInit = {
   headers: {
@@ -74,18 +58,28 @@ const downloadPackage = async (
   p: PackageSnapshot,
   outputPath: string,
 ) => {
+  const logger = globalLogger.child({
+    specifier,
+  });
   // TODO: add support for mirrors
   const url =
     "url" in p.resolution && typeof p.resolution.url === "string"
       ? p.resolution.url
       : registryUrlForPackage(specifier);
 
-  const integrity = "integrity" in p.resolution ? p.resolution.integrity : null;
+  const integrity =
+    "integrity" in p.resolution && typeof p.resolution.integrity === "string"
+      ? p.resolution.integrity
+      : null;
 
-  logger.debug`Got URL ${url} and integrity ${integrity} for ${specifier}`;
+  logger.debug({
+    msg: `Got URL ${url.toString()} and integrity ${integrity} for ${specifier}`,
+    url,
+    integrity,
+  });
 
   if (!integrity) {
-    logger.warn`Package ${specifier} does not have an integrity entry.`;
+    logger.warn(`Package ${specifier} does not have an integrity entry.`);
   }
 
   const outputFile = join(outputPath, urlToCachePath(url));
@@ -119,7 +113,7 @@ const main = async (args: string[]) => {
     throw new Error("Parsed lockfile is empty or missing");
   }
 
-  logger.debug`Got lockfile ${lockfile}`;
+  globalLogger.debug({ msg: `Got lockfile`, lockfile });
 
   const packages = Object.entries(lockfile.packages);
 
@@ -136,7 +130,7 @@ const main = async (args: string[]) => {
   )) {
     const [specifier] = packages[index];
     const packageId = removeSuffix(specifier);
-    logger.info`Downloaded ${packageId}`;
+    globalLogger.info({ msg: `Downloaded ${packageId}`, packageId });
   }
 };
 

@@ -2,6 +2,22 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import { pino } from "pino";
+
+export const getGlobalLogger = () => {
+  return pino({
+    name: "pnpm-mirror",
+    level: process.env.NODE_ENV === "development" ? "debug" : "info",
+    timestamp: false,
+    transport: {
+      target: "pino-pretty",
+      options: {
+        ignore: "pid,hostname",
+      },
+    },
+  });
+};
+
 export const urlToCachePath = (url: string | URL) => {
   if (!(url instanceof URL)) {
     url = new URL(url);

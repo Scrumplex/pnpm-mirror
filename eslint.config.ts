@@ -21,14 +21,6 @@ export default defineConfig([
       globals: globals.node,
       parserOptions: { projectService: true },
     },
-    rules: {
-      "@typescript-eslint/no-unused-expressions": [
-        "error",
-        {
-          allowTaggedTemplates: true,
-        },
-      ],
-    },
   },
   eslintConfigPrettier,
 ]);

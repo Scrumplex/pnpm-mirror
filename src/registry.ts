@@ -2,10 +2,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import { getLogger } from "@logtape/logtape";
 import { removeSuffix } from "@pnpm/deps.path";
-
-const logger = getLogger(["pnpm-mirror", "index"]);
+import { getGlobalLogger } from "./util.js";
 
 export const defaultRegistry = "https://registry.npmjs.org" as const;
 
@@ -15,6 +13,9 @@ export const registryUrlForPackage = (
   specifier: string,
   registry: string = defaultRegistry,
 ) => {
+  const logger = getGlobalLogger().child({
+    specifier,
+  });
   const packageId = removeSuffix(specifier);
 
   const matches = packageId.match(namePattern);
@@ -22,7 +23,11 @@ export const registryUrlForPackage = (
     throw new Error(`Package ${packageId} did not match pattern`);
   }
 
-  logger.debug`Package ${packageId} matched ${matches}`;
+  logger.debug({
+    msg: `Package ${packageId} has ${matches.length} matches`,
+    packageId,
+    matches,
+  });
 
   const fullName = matches[1];
   // Scoped packages (e.g. @scope/name) need special treatment
@@ -32,11 +37,19 @@ export const registryUrlForPackage = (
   // Crude way to check if dependency is pinned to a URL
   // TODO: parse URL instead!
   if (version.startsWith("http")) {
-    logger.info`Using pinned URL ${version} for ${packageId}`;
+    logger.info({
+      msg: `Using pinned URL ${version} for ${packageId}`,
+      packageId,
+      version,
+    });
     return version;
   }
 
   const url = new URL(`${fullName}/-/${packageName}-${version}.tgz`, registry);
-  logger.debug`Resolved URL ${url} for ${packageId}`;
+  logger.debug({
+    msg: `Resolved URL ${url.toString()} for ${packageId}`,
+    packageId,
+    url,
+  });
   return url;
 };
