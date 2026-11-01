@@ -22,7 +22,6 @@
     "globals": "^17.9.0",
     "jiti": "^2.7.0",
     "prettier": "3.9.10",
-    "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0",
     "vitest": "^5.0.5"
@@ -33,8 +32,7 @@
     "format:fix": "prettier . --write",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "test": "vitest --root src/ --watch false",
-    "dev": "tsx src/index.ts"
+    "test": "vitest --root src/ --watch false"
   },
   "files": [
     "dist/*.js"
