@@ -7,3 +7,4 @@ repl-result*
 
 node_modules
 *.js
+.vitest

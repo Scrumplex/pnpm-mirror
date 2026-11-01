@@ -2,42 +2,38 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import assert from "node:assert";
+import { describe, expect, test } from "vitest";
 import { defaultRegistry, registryUrlForPackage } from "./registry.js";
 
 describe("registry", function () {
   describe("registryUrlForPackage()", function () {
-    it("should handle scoped packages", function () {
-      assert.equal(
-        registryUrlForPackage("@types/node@24.10.1"),
+    test("should handle scoped packages", function () {
+      expect(registryUrlForPackage("@types/node@24.10.1").toString()).toBe(
         `${defaultRegistry}/@types/node/-/node-24.10.1.tgz`,
       );
-      assert.equal(
-        registryUrlForPackage("@pnpm/foo.bar@12.34.56-beta.1"),
-        `${defaultRegistry}/@pnpm/foo.bar/-/foo.bar-12.34.56-beta.1.tgz`,
-      );
+      expect(
+        registryUrlForPackage("@pnpm/foo.bar@12.34.56-beta.1").toString(),
+      ).toBe(`${defaultRegistry}/@pnpm/foo.bar/-/foo.bar-12.34.56-beta.1.tgz`);
     });
-    it("should handle unscoped packages", function () {
-      assert.equal(
-        registryUrlForPackage("typescript@1.2.3"),
+    test("should handle unscoped packages", function () {
+      expect(registryUrlForPackage("typescript@1.2.3").toString()).toBe(
         `${defaultRegistry}/typescript/-/typescript-1.2.3.tgz`,
       );
-      assert.equal(
-        registryUrlForPackage("date-fns@0.0.0-beta.0"),
+      expect(registryUrlForPackage("date-fns@0.0.0-beta.0").toString()).toBe(
         `${defaultRegistry}/date-fns/-/date-fns-0.0.0-beta.0.tgz`,
       );
     });
-    it("should handle pinned tarball", function () {
-      assert.equal(
-        registryUrlForPackage("foobar@https://example.com/foobar-1.2.3.tgz"),
-        `https://example.com/foobar-1.2.3.tgz`,
-      );
-      assert.equal(
+    test("should handle pinned tarball", function () {
+      expect(
+        registryUrlForPackage(
+          "foobar@https://example.com/foobar-1.2.3.tgz",
+        ).toString(),
+      ).toBe(`https://example.com/foobar-1.2.3.tgz`);
+      expect(
         registryUrlForPackage(
           "foobar@https://user:pass@private.example.com/foobar-1.2.3.tgz",
-        ),
-        `https://user:pass@private.example.com/foobar-1.2.3.tgz`,
-      );
+        ).toString(),
+      ).toBe(`https://user:pass@private.example.com/foobar-1.2.3.tgz`);
     });
   });
 });

@@ -15,18 +15,17 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/mocha": "^10.0.10",
     "@types/node": "^25.9.3",
+    "@vitest/eslint-plugin": "^1.6.28",
     "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-mocha": "^12.0.2",
     "globals": "^17.9.0",
     "jiti": "^2.7.0",
-    "mocha": "^12.0.0",
     "prettier": "3.9.10",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.65.0"
+    "typescript-eslint": "^8.65.0",
+    "vitest": "^5.0.5"
   },
   "scripts": {
     "build": "tsc",
@@ -34,7 +33,7 @@
     "format:fix": "prettier . --write",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "test": "mocha --require tsx --extension spec.ts src/",
+    "test": "vitest --root src/ --watch false",
     "dev": "tsx src/index.ts"
   },
   "files": [

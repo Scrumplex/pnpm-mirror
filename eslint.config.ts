@@ -6,7 +6,7 @@ import eslintConfigPrettier from "eslint-config-prettier/flat";
 import globals from "globals";
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
-import mochaPlugin from "eslint-plugin-mocha";
+import vitest from "@vitest/eslint-plugin";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -15,7 +15,7 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
-      mochaPlugin.configs.recommended,
+      vitest.configs.recommended,
     ],
     languageOptions: {
       globals: globals.node,
